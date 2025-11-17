@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Virtual env
+.venv/
+
+# SA file
+bot-sandbox-interviews-sa.json
+
+# Local environment config
+.env
+
+# Data / exports
+data/
+*.parquet
+
+# VSCode / IDE stuff
+.vscode/
+.idea/
