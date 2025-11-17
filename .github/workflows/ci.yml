@@ -17,6 +17,7 @@ jobs:
       - run: pre-commit run black --all-files
 
   flake8:
+    needs: black
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
