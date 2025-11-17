@@ -76,7 +76,6 @@ def _debug_list_nearby_sales_files(
         logger.info("  - gs://%s/%s", bucket.name, name)
 
 
-
 def load_sales_parquet(
     project_id: str,
     bucket_name: str,
@@ -103,9 +102,7 @@ def load_sales_parquet(
       - order_id (STRING)
     """
     if end_date < start_date:
-        raise ValueError(
-            f"end_date {end_date} must be on or after start_date {start_date}"
-        )
+        raise ValueError(f"end_date {end_date} must be on or after start_date {start_date}")
 
     num_days = (end_date - start_date).days + 1
     if max_files is not None and num_days > max_files:
@@ -139,9 +136,7 @@ def load_sales_parquet(
         try:
             data = blob.download_as_bytes()
         except NotFound:
-            logger.warning(
-                "Sales file not found for date %s: %s", current_date, full_uri
-            )
+            logger.warning("Sales file not found for date %s: %s", current_date, full_uri)
             _debug_list_nearby_sales_files(bucket, current_date, max_results=10)
             continue
         except GoogleAPIError as exc:
