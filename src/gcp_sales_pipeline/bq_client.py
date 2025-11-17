@@ -60,10 +60,7 @@ def load_products(
     required_cols = {"product_id", "product_name", "category", "brand", "condition"}
     missing = required_cols - set(df.columns)
     if missing:
-        msg = (
-            f"Products table {table_full_name} is missing required columns: "
-            f"{', '.join(sorted(missing))}"
-        )
+        msg = f"Products table {table_full_name} is missing required columns: " f"{', '.join(sorted(missing))}"
         logger.error(msg)
         raise DataQualityError(msg)
 

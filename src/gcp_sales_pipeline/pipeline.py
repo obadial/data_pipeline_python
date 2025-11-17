@@ -9,7 +9,6 @@ from typing import Optional, Sequence
 import pandas as pd
 
 from .bq_client import load_products
-from .exceptions import DataLoadError, DataQualityError, TooManyFilesError
 from .filters import TimeGranularity, filter_sales_by_date
 from .gcs_client import load_sales_parquet
 
@@ -58,15 +57,11 @@ def _build_suffix(ref_date: date, granularity: TimeGranularity) -> str:
 def _build_output_path(config: PipelineConfig) -> Path:
     """Build the full output path."""
     suffix = _build_suffix(config.ref_date, config.granularity)
-    filename = (
-        f"sales_products_{config.granularity.value}_{suffix}.{config.output_format}"
-    )
+    filename = f"sales_products_{config.granularity.value}_{suffix}.{config.output_format}"
     return config.output_dir / filename
 
 
-def _compute_date_range(
-    ref_date: date, granularity: TimeGranularity
-) -> tuple[date, date]:
+def _compute_date_range(ref_date: date, granularity: TimeGranularity) -> tuple[date, date]:
     """
     Compute [start_date, end_date] for the given reference date and granularity.
     """
@@ -201,8 +196,7 @@ def run_pipeline(config: PipelineConfig) -> Path:
     null_count = products_df["product_id"].isna().sum()
     if null_count > 0:
         logger.warning(
-            "Dropping %d product rows with NULL product_id from products table "
-            "%s.%s.%s before joining.",
+            "Dropping %d product rows with NULL product_id from products table " "%s.%s.%s before joining.",
             null_count,
             config.project_id,
             config.bq_dataset,
@@ -230,8 +224,7 @@ def run_pipeline(config: PipelineConfig) -> Path:
 
     if sales_df.empty:
         logger.warning(
-            "No sales data loaded from GCS for range %s to %s. "
-            "Exporting an empty dataset.",
+            "No sales data loaded from GCS for range %s to %s. " "Exporting an empty dataset.",
             start_date,
             end_date,
         )
@@ -258,9 +251,7 @@ def run_pipeline(config: PipelineConfig) -> Path:
                     "Dropping %d sales rows with NULL product_id before joining.",
                     null_sales_count,
                 )
-                filtered_sales_df = filtered_sales_df[
-                    filtered_sales_df["product_id"].notna()
-                ].copy()
+                filtered_sales_df = filtered_sales_df[filtered_sales_df["product_id"].notna()].copy()
 
             # 6. Pragmatic dedup: ensure product_id is unique in products_df
             if not products_df["product_id"].is_unique:
@@ -320,5 +311,3 @@ def run_pipeline(config: PipelineConfig) -> Path:
 
     logger.info("Pipeline finished successfully.")
     return output_path
-
-

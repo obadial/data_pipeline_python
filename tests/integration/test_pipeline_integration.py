@@ -68,5 +68,10 @@ def test_run_pipeline_with_mocks(monkeypatch, tmp_path: Path):
         "category",
         "brand",
         "condition",
+        "processed_at",
+        "sale_date",
+        "quarter",
+        "year",
+        "month",
     }
     assert len(df) == 2

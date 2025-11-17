@@ -22,17 +22,12 @@ def _valid_date(value: str):
     try:
         return datetime.strptime(value, DATE_FORMAT).date()
     except ValueError as exc:
-        raise argparse.ArgumentTypeError(
-            f"Invalid date '{value}', expected YYYY-MM-DD."
-        ) from exc
+        raise argparse.ArgumentTypeError(f"Invalid date '{value}', expected YYYY-MM-DD.") from exc
 
 
 def parse_args(argv: Optional[list[str]] = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description=(
-            "Join products (BigQuery) and sales (GCS) filtered by date "
-            "and export as parquet/csv."
-        )
+        description=("Join products (BigQuery) and sales (GCS) filtered by date " "and export as parquet/csv.")
     )
 
     parser.add_argument(
@@ -41,7 +36,6 @@ def parse_args(argv: Optional[list[str]] = None) -> argparse.Namespace:
         required=True,
         help="Reference date in YYYY-MM-DD format.",
     )
-
 
     parser.add_argument(
         "--project-id",
@@ -59,10 +53,7 @@ def parse_args(argv: Optional[list[str]] = None) -> argparse.Namespace:
     parser.add_argument(
         "--brand",
         action="append",
-        help=(
-            "Filter on one or more brands. "
-            "Can be specified multiple times (AND combined with other filters)."
-        ),
+        help=("Filter on one or more brands. " "Can be specified multiple times (AND combined with other filters)."),
     )
 
     parser.add_argument(
@@ -110,10 +101,7 @@ def parse_args(argv: Optional[list[str]] = None) -> argparse.Namespace:
         "--max-sales-files",
         type=int,
         default=500,
-        help=(
-            "Maximum number of daily sales files (days) to read from GCS before "
-            "failing (default: 500)."
-        ),
+        help=("Maximum number of daily sales files (days) to read from GCS before " "failing (default: 500)."),
     )
 
     parser.add_argument(
@@ -139,10 +127,7 @@ def _check_credentials_env() -> None:
         raise SystemExit(msg)
 
     if not Path(creds_path).is_file():
-        msg = (
-            "Credentials file specified by GOOGLE_APPLICATION_CREDENTIALS "
-            f"does not exist: {creds_path}"
-        )
+        msg = "Credentials file specified by GOOGLE_APPLICATION_CREDENTIALS " f"does not exist: {creds_path}"
         raise SystemExit(msg)
 
 

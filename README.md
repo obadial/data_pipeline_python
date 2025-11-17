@@ -87,7 +87,7 @@ The pipeline:
 Products are read from table:
 
 ```text
-test.products
+bm_mock_data.products
 ```
 
 Expected schema:

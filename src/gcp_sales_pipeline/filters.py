@@ -39,9 +39,7 @@ def filter_sales_by_date(
     if granularity == TimeGranularity.DAY:
         mask = df["sold_at"].dt.date == ref_date
     elif granularity == TimeGranularity.MONTH:
-        mask = (df["sold_at"].dt.year == ref_date.year) & (
-            df["sold_at"].dt.month == ref_date.month
-        )
+        mask = (df["sold_at"].dt.year == ref_date.year) & (df["sold_at"].dt.month == ref_date.month)
     elif granularity == TimeGranularity.QUARTER:
         ref_quarter = (ref_date.month - 1) // 3 + 1
         sold_quarter = (df["sold_at"].dt.month - 1) // 3 + 1
