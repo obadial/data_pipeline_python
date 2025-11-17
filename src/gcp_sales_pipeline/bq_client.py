@@ -11,7 +11,7 @@ from .exceptions import DataLoadError, DataQualityError
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_DATASET: Final[str] = "test"
+DEFAULT_DATASET: Final[str] = "bm_mock_data"
 DEFAULT_PRODUCTS_TABLE: Final[str] = "products"
 
 
